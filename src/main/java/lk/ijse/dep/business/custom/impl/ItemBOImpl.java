@@ -1,7 +1,7 @@
 package lk.ijse.dep.business.custom.impl;
 
 import lk.ijse.dep.business.custom.ItemBO;
-import lk.ijse.dep.repository.custom.ItemDAO;
+import lk.ijse.dep.repository.custom.ItemRepository;
 import lk.ijse.dep.entity.Item;
 import lk.ijse.dep.util.ItemTM;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ public class ItemBOImpl implements ItemBO {
 
     // Dependency Declaration
     @Autowired
-    private ItemDAO itemDAO;
+    private ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
     public String getNewItemCode() throws Exception {
-        String lastItemCode = itemDAO.getLastItemCode();
+        String lastItemCode = itemRepository.getLastItemCode();
         if (lastItemCode == null) {
             return "I001";
         } else {
@@ -42,7 +42,7 @@ public class ItemBOImpl implements ItemBO {
 
     @Transactional(readOnly = true)
     public List<ItemTM> getAllItems() throws Exception {
-        List<Item> allItems = itemDAO.findAll();
+        List<Item> allItems = itemRepository.findAll();
         List<ItemTM> items = new ArrayList<>();
         for (Item item : allItems) {
             items.add(new ItemTM(item.getCode(), item.getDescription(), item.getQtyOnHand(),
@@ -52,15 +52,15 @@ public class ItemBOImpl implements ItemBO {
     }
 
     public void saveItem(String code, String description, int qtyOnHand, double unitPrice) throws Exception {
-        itemDAO.save(new Item(code, description, BigDecimal.valueOf(unitPrice), qtyOnHand));
+        itemRepository.save(new Item(code, description, BigDecimal.valueOf(unitPrice), qtyOnHand));
     }
 
     public void deleteItem(String itemCode) throws Exception {
-        itemDAO.delete(itemCode);
+        itemRepository.delete(itemCode);
     }
 
     public void updateItem(String description, int qtyOnHand, double unitPrice, String itemCode) throws Exception {
-        itemDAO.update(new Item(itemCode, description,
+        itemRepository.update(new Item(itemCode, description,
                 BigDecimal.valueOf(unitPrice), qtyOnHand));
     }
 }

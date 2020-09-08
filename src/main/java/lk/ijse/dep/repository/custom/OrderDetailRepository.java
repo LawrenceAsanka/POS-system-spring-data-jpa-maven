@@ -4,6 +4,6 @@ import lk.ijse.dep.repository.CrudDAO;
 import lk.ijse.dep.entity.OrderDetail;
 import lk.ijse.dep.entity.OrderDetailPK;
 
-public interface OrderDetailDAO extends CrudDAO<OrderDetail, OrderDetailPK> {
+public interface OrderDetailRepository extends CrudDAO<OrderDetail, OrderDetailPK> {
 
 }

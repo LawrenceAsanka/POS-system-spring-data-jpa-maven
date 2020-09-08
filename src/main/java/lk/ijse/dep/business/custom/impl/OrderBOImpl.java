@@ -22,19 +22,19 @@ import java.util.List;
 public class OrderBOImpl implements OrderBO {
 
     @Autowired
-    private OrderDAO orderDAO;
+    private OrderRepository orderRepository;
     @Autowired
-    private OrderDetailDAO orderDetailDAO;
+    private OrderDetailRepository orderDetailRepository;
     @Autowired
-    private ItemDAO itemDAO;
+    private ItemRepository itemRepository;
     @Autowired
-    private CustomerDAO customerDAO;
+    private CustomerRepository customerRepository;
     @Autowired
     private QueryDAO queryDAO;
 
     @Transactional(readOnly = true)
     public String getNewOrderId() throws Exception {
-        String lastOrderId = orderDAO.getLastOrderId();
+        String lastOrderId = orderRepository.getLastOrderId();
         if (lastOrderId == null) {
             return "OD001";
         } else {
@@ -53,18 +53,18 @@ public class OrderBOImpl implements OrderBO {
     }
 
     public void placeOrder(OrderTM order, List<OrderDetailTM> orderDetails) throws Exception {
-        orderDAO.save(new Order(order.getOrderId(),
+        orderRepository.save(new Order(order.getOrderId(),
                 Date.valueOf(order.getOrderDate()),
-                customerDAO.find(order.getCustomerId())));
+                customerRepository.find(order.getCustomerId())));
 
         for (OrderDetailTM orderDetail : orderDetails) {
-            orderDetailDAO.save(new OrderDetail(
+            orderDetailRepository.save(new OrderDetail(
                     order.getOrderId(), orderDetail.getCode(),
                     orderDetail.getQty(), BigDecimal.valueOf(orderDetail.getUnitPrice())
             ));
-            Item item = itemDAO.find(orderDetail.getCode());
+            Item item = itemRepository.find(orderDetail.getCode());
             item.setQtyOnHand(item.getQtyOnHand() - orderDetail.getQty());
-            itemDAO.update(item);
+            itemRepository.update(item);
 
         }
     }

@@ -1,7 +1,7 @@
 package lk.ijse.dep.business.custom.impl;
 
 import lk.ijse.dep.business.custom.CustomerBO;
-import lk.ijse.dep.repository.custom.CustomerDAO;
+import lk.ijse.dep.repository.custom.CustomerRepository;
 import lk.ijse.dep.entity.Customer;
 import lk.ijse.dep.util.CustomerTM;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ public class CustomerBOImpl implements CustomerBO {
 
     // Field Injection
     @Autowired
-    private CustomerDAO customerDAO;
+    private CustomerRepository customerRepository;
 
     @Transactional(readOnly = true)
     public List<CustomerTM> getAllCustomers() throws Exception {
-        List<Customer> allCustomers = customerDAO.findAll();
+        List<Customer> allCustomers = customerRepository.findAll();
         List<CustomerTM> customers = new ArrayList<>();
         for (Customer customer : allCustomers) {
             customers.add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
@@ -32,20 +32,20 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     public void saveCustomer(String id, String name, String address) throws Exception {
-        customerDAO.save(new Customer(id, name, address));
+        customerRepository.save(new Customer(id, name, address));
     }
 
     public void deleteCustomer(String customerId) throws Exception {
-        customerDAO.delete(customerId);
+        customerRepository.delete(customerId);
     }
 
     public void updateCustomer(String name, String address, String customerId) throws Exception {
-        customerDAO.update(new Customer(customerId, name, address));
+        customerRepository.update(new Customer(customerId, name, address));
     }
 
     @Transactional(readOnly = true)
     public String getNewCustomerId() throws Exception {
-        String lastCustomerId = customerDAO.getLastCustomerId();
+        String lastCustomerId = customerRepository.getLastCustomerId();
         if (lastCustomerId == null) {
             return "C001";
         } else {

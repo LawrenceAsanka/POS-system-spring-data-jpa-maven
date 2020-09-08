@@ -1,14 +1,14 @@
 package lk.ijse.dep.repository.custom.impl;
 
 import lk.ijse.dep.repository.CrudDAOImpl;
-import lk.ijse.dep.repository.custom.ItemDAO;
+import lk.ijse.dep.repository.custom.ItemRepository;
 import lk.ijse.dep.entity.Item;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class ItemDAOImpl extends CrudDAOImpl<Item, String> implements ItemDAO {
+public class ItemRepositoryImpl extends CrudDAOImpl<Item, String> implements ItemRepository {
 
 
     public String getLastItemCode() throws Exception {
