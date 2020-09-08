@@ -1,7 +1,7 @@
 package lk.ijse.dep.business.custom.impl;
 
 import lk.ijse.dep.business.custom.ItemBO;
-import lk.ijse.dep.repository.custom.ItemRepository;
+import lk.ijse.dep.repository.ItemRepository;
 import lk.ijse.dep.entity.Item;
 import lk.ijse.dep.util.ItemTM;
 import org.springframework.beans.factory.annotation.Autowired;

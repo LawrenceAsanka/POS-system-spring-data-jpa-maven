@@ -1,6 +1,5 @@
-package lk.ijse.dep.repository.custom;
+package lk.ijse.dep.repository;
 
-import lk.ijse.dep.repository.CrudDAO;
 import lk.ijse.dep.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 

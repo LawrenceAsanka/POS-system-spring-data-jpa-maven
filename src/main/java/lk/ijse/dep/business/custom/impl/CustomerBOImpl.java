@@ -1,7 +1,7 @@
 package lk.ijse.dep.business.custom.impl;
 
 import lk.ijse.dep.business.custom.CustomerBO;
-import lk.ijse.dep.repository.custom.CustomerRepository;
+import lk.ijse.dep.repository.CustomerRepository;
 import lk.ijse.dep.entity.Customer;
 import lk.ijse.dep.util.CustomerTM;
 import org.springframework.beans.factory.annotation.Autowired;
