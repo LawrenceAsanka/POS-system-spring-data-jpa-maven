@@ -1,4 +1,4 @@
-package lk.ijse.dep.dao;
+package lk.ijse.dep.repository;
 
 import lk.ijse.dep.entity.SuperEntity;
 

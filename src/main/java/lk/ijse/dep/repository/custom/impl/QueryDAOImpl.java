@@ -1,6 +1,6 @@
-package lk.ijse.dep.dao.custom.impl;
+package lk.ijse.dep.repository.custom.impl;
 
-import lk.ijse.dep.dao.custom.QueryDAO;
+import lk.ijse.dep.repository.custom.QueryDAO;
 import lk.ijse.dep.entity.CustomEntity;
 import org.springframework.stereotype.Repository;
 

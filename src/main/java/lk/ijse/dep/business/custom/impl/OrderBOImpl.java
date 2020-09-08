@@ -1,7 +1,7 @@
 package lk.ijse.dep.business.custom.impl;
 
 import lk.ijse.dep.business.custom.OrderBO;
-import lk.ijse.dep.dao.custom.*;
+import lk.ijse.dep.repository.custom.*;
 import lk.ijse.dep.entity.CustomEntity;
 import lk.ijse.dep.entity.Item;
 import lk.ijse.dep.entity.Order;

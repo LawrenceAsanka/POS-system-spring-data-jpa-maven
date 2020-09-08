@@ -1,7 +1,7 @@
-package lk.ijse.dep.dao.custom.impl;
+package lk.ijse.dep.repository.custom.impl;
 
-import lk.ijse.dep.dao.CrudDAOImpl;
-import lk.ijse.dep.dao.custom.CustomerDAO;
+import lk.ijse.dep.repository.CrudDAOImpl;
+import lk.ijse.dep.repository.custom.CustomerDAO;
 import lk.ijse.dep.entity.Customer;
 import org.springframework.stereotype.Repository;
 

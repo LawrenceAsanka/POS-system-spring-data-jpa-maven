@@ -1,6 +1,6 @@
-package lk.ijse.dep.dao.custom;
+package lk.ijse.dep.repository.custom;
 
-import lk.ijse.dep.dao.SuperDAO;
+import lk.ijse.dep.repository.SuperDAO;
 import lk.ijse.dep.entity.CustomEntity;
 
 import java.util.List;

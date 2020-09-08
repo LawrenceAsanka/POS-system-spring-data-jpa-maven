@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-@EnableJpaRepositories("lk.ijse.dep.dao")
+@EnableJpaRepositories("lk.ijse.dep.repository")
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 @Configuration
@@ -30,7 +30,7 @@ public class JPAConfig {
 
     // to handle exception
     @Bean
-    public static PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
+    public static PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
@@ -61,12 +61,12 @@ public class JPAConfig {
         adapter.setDatabase(Database.MYSQL);
         adapter.setDatabasePlatform(env.getRequiredProperty("hibernate.dialect"));
         adapter.setShowSql(env.getRequiredProperty("hibernate.show_sql", Boolean.class));
-        adapter.setGenerateDdl(env.getRequiredProperty("hibernate.hbm2ddl.auto").equals("update") ? true : false);
+        adapter.setGenerateDdl(env.getRequiredProperty("hibernate.hbm2ddl.auto").equals("update"));
         return adapter;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
     }
 
