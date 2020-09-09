@@ -15,7 +15,6 @@ import java.util.List;
 @Transactional
 public class CustomerBOImpl implements CustomerBO {
 
-
     // Field Injection
     @Autowired
     private CustomerRepository customerRepository;
@@ -36,16 +35,16 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     public void deleteCustomer(String customerId) throws Exception {
-        customerRepository.delete(customerId);
+        customerRepository.deleteById(customerId);
     }
 
     public void updateCustomer(String name, String address, String customerId) throws Exception {
-        customerRepository.update(new Customer(customerId, name, address));
+        customerRepository.save(new Customer(customerId, name, address));
     }
 
     @Transactional(readOnly = true)
     public String getNewCustomerId() throws Exception {
-        String lastCustomerId = customerRepository.getLastCustomerId();
+        String lastCustomerId = customerRepository.getFirstLastCustomerIdByOrderByIdDesc().getId();
         if (lastCustomerId == null) {
             return "C001";
         } else {

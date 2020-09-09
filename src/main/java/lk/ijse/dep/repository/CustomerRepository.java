@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer,String> {
 
-    String getFirstLastCustomerIdByOrderByDesc() throws Exception;
+    Customer getFirstLastCustomerIdByOrderByIdDesc() throws Exception;
 
 }

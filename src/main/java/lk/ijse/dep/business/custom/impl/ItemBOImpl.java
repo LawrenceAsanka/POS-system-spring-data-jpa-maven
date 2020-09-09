@@ -22,7 +22,7 @@ public class ItemBOImpl implements ItemBO {
 
     @Transactional(readOnly = true)
     public String getNewItemCode() throws Exception {
-        String lastItemCode = itemRepository.getLastItemCode();
+        String lastItemCode = itemRepository.getFirstLastItemCodeByOrderByCodeDesc().getCode();
         if (lastItemCode == null) {
             return "I001";
         } else {
@@ -56,11 +56,11 @@ public class ItemBOImpl implements ItemBO {
     }
 
     public void deleteItem(String itemCode) throws Exception {
-        itemRepository.delete(itemCode);
+        itemRepository.deleteById(itemCode);
     }
 
     public void updateItem(String description, int qtyOnHand, double unitPrice, String itemCode) throws Exception {
-        itemRepository.update(new Item(itemCode, description,
+        itemRepository.save(new Item(itemCode, description,
                 BigDecimal.valueOf(unitPrice), qtyOnHand));
     }
 }

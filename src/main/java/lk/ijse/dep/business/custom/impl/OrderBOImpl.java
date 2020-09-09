@@ -6,7 +6,6 @@ import lk.ijse.dep.repository.ItemRepository;
 import lk.ijse.dep.repository.OrderDetailRepository;
 import lk.ijse.dep.repository.OrderRepository;
 import lk.ijse.dep.repository.custom.*;
-import lk.ijse.dep.entity.CustomEntity;
 import lk.ijse.dep.entity.Item;
 import lk.ijse.dep.entity.Order;
 import lk.ijse.dep.entity.OrderDetail;
@@ -33,12 +32,10 @@ public class OrderBOImpl implements OrderBO {
     private ItemRepository itemRepository;
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private QueryDAO queryDAO;
 
     @Transactional(readOnly = true)
     public String getNewOrderId() throws Exception {
-        String lastOrderId = orderRepository.getLastOrderId();
+        String lastOrderId = orderRepository.getFirstLastOrderIdByOrderByIdDesc().getId();
         if (lastOrderId == null) {
             return "OD001";
         } else {
@@ -59,16 +56,16 @@ public class OrderBOImpl implements OrderBO {
     public void placeOrder(OrderTM order, List<OrderDetailTM> orderDetails) throws Exception {
         orderRepository.save(new Order(order.getOrderId(),
                 Date.valueOf(order.getOrderDate()),
-                customerRepository.find(order.getCustomerId())));
+                customerRepository.findById(order.getCustomerId()).get()));
 
         for (OrderDetailTM orderDetail : orderDetails) {
             orderDetailRepository.save(new OrderDetail(
                     order.getOrderId(), orderDetail.getCode(),
                     orderDetail.getQty(), BigDecimal.valueOf(orderDetail.getUnitPrice())
             ));
-            Item item = itemRepository.find(orderDetail.getCode());
+            Item item = itemRepository.findById(orderDetail.getCode()).get();
             item.setQtyOnHand(item.getQtyOnHand() - orderDetail.getQty());
-            itemRepository.update(item);
+            itemRepository.save(item);
 
         }
     }
@@ -80,7 +77,6 @@ public class OrderBOImpl implements OrderBO {
         List<OrderTM> orderDetailsList = new ArrayList<>();
         for (CustomEntity orderDetails : odl) {
             BigDecimal total = orderDetails.getTotal();
-
             orderDetailsList.add(new OrderTM(orderDetails.getOrderId(), orderDetails.getOrderDate().toLocalDate(), orderDetails.getCustomerId(),
                     orderDetails.getCustomerName(), Double.parseDouble(total.toString())));
         }
