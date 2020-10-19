@@ -1,11 +1,11 @@
 package lk.ijse.dep.business.custom.impl;
 
 import lk.ijse.dep.business.custom.OrderBO;
+import lk.ijse.dep.entity.CustomEntity;
 import lk.ijse.dep.repository.CustomerRepository;
 import lk.ijse.dep.repository.ItemRepository;
 import lk.ijse.dep.repository.OrderDetailRepository;
 import lk.ijse.dep.repository.OrderRepository;
-import lk.ijse.dep.repository.custom.*;
 import lk.ijse.dep.entity.Item;
 import lk.ijse.dep.entity.Order;
 import lk.ijse.dep.entity.OrderDetail;
@@ -73,9 +73,9 @@ public class OrderBOImpl implements OrderBO {
     @Transactional(readOnly = true)
     @Override
     public List<OrderTM> getAllOrders() throws Exception {
-        List<CustomEntity> odl = queryDAO.getOrderDetail();
+        List<CustomEntity> allOrderDetails = orderRepository.getAllOrderDetails2();
         List<OrderTM> orderDetailsList = new ArrayList<>();
-        for (CustomEntity orderDetails : odl) {
+        for (CustomEntity orderDetails : allOrderDetails) {
             BigDecimal total = orderDetails.getTotal();
             orderDetailsList.add(new OrderTM(orderDetails.getOrderId(), orderDetails.getOrderDate().toLocalDate(), orderDetails.getCustomerId(),
                     orderDetails.getCustomerName(), Double.parseDouble(total.toString())));

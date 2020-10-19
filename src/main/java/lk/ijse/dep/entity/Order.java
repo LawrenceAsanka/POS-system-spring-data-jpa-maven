@@ -3,18 +3,24 @@ package lk.ijse.dep.entity;
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+
+//Joined query
+@NamedQuery(name ="Order.getAllOrderDetails2",query = "SELECT o.id AS orderId,o.date AS orderDate,c.id AS customerId,c.name AS customerName,SUM(od.unitPrice*od.qty) AS total FROM Order o INNER JOIN o.customerId c INNER JOIN o.orderDetailList od " +
+        "GROUP BY o.id")
+
+@NamedNativeQuery(name = "Order.getAllOrderDetails",
+        query = "SELECT o.id AS orderId,o.date AS orderDate,c.id AS customerId,c.name AS customerName,SUM(od.qty*od.unitPrice) AS total FROM `Order` o " +
+                "INNER JOIN Customer c ON o.customerId = c.id " +
+                "INNER JOIN OrderDetail od on o.id = od.orderId " +
+                "GROUP BY o.id"
+        )
 
 @Entity
 //@AllArgsConstructor
